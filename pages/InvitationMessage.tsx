@@ -6,9 +6,9 @@ export default function InviationMessage() {
         //bg-blue-50
         text-center'
         >
-            <div className=''>Dear Dale and Kate</div>
-            <div className=''>We are excited to invite you to our wedding on the <br />
-                <div className='font-extrabold'>14th of March 2023
+        <div className=''>Dear Dale and Kate,
+            we are excited to invite you to our wedding on the <br />
+                <div className='text-4xl p-5'>14th of March 2023
                 </div>
             </div>
         </div>
