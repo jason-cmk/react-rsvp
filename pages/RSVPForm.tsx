@@ -38,7 +38,7 @@ function RSVPForm() {
         //bg-blue-50"
         >
             <form onSubmit={handleSubmit}
-                className="mt-8 space-y-6 bg-stone-50 rounded-md drop-shadow-md p-5 grid-cols-1">
+                className="space-y-6 bg-stone-50 rounded-md drop-shadow-md p-5 grid-cols-1">
                 <div>
                     <label>
                         Are you able to attend?
