@@ -8,7 +8,7 @@ export default function InviationMessage() {
             <p className=''>We are excited to invite you to the wedding of</p>
             <h1 className='text-4xl p-5 text-center '>Cindy and Jason</h1>
             <div className=''>on the<br />
-                <div className='text-4xl p-5'>14th of March 2024
+                <div className='text-4xl p-5 text-center'>14th of March 2024
                 </div>
             </div>
         </div>

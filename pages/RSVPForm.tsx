@@ -13,7 +13,7 @@ function RSVPForm() {
         setFoodAllergies(event.target.value)
     }
 
-    function handleMessageChange(event: ChangeEvent<HTMLInputElement>): void {
+    function handleMessageChange(event: ChangeEvent<HTMLTextAreaElement>): void {
         setMessage(event.target.value)
     }
 
@@ -40,39 +40,40 @@ function RSVPForm() {
 
     return (
         <div className='min-h-full flex justify-center items-center font-sans'>
-            <form onSubmit={handleSubmit}
-                className='space-y-6 bg-stone-50 rounded-xl drop-shadow-xl p-5 grid-cols-1 '>
-                <div>
-                    <label>
-                        <div class='my-1'>Are you able to attend?</div>
-                        <select value={attending || ''} onChange={handleAttendingChange} className='border my-1'>
-                            <option value=''></option>
-                            <option value='yes'>Yes</option>
-                            <option value='no'>No</option>
-                        </select>
-                    </label>
+            <form onSubmit={handleSubmit}>
+                <div className='space-y-6 bg-stone-50 rounded-xl drop-shadow-xl p-5 grid-cols-1 w-96'>
+                    <div>
+                        <label className='flex-col'>
+                            <div className='w-full'>Are you able to attend?</div>
+                            <select value={attending || ''} onChange={handleAttendingChange} className='w-full my-1 rounded-lg border border-gray-300'>
+                                <option value=''></option>
+                                <option value='yes'>Yes</option>
+                                <option value='no'>No</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <label className='flex-col'>
+                            <div className='w-full'>Food allergies:</div>
+                            <input type='text' value={foodAllergies || ''} onChange={handleFoodAllergiesChange}
+                                className='my-1 w-full rounded-lg border border-gray-300'
+                            />
+                        </label>
+                    </div>
+                    <div>
+                        <label className='flex-col'>
+                            <div className='w-full'>Leave us message!</div>
+                            <textarea value={message || ''} rows={5} onChange={handleMessageChange}
+                                className='my-1 w-full rounded-lg border border-gray-300'
+                            />
+                        </label>
+                    </div>
+                    <br />
+                    <button type='submit'
+                        className='bg-rose-300 btn hover:bg-rose-100 font-medium py-2 px-4 rounded-full'>
+                        Submit RSVP
+                    </button>
                 </div>
-                <div>
-                    <label>
-                        <div>Food allergies:</div>
-                        <input type='text' value={foodAllergies || ''} onChange={handleFoodAllergiesChange}
-                            className='border my-1'
-                        />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        <div>Leave us message!</div>
-                        <textarea type='text' value={message || ''} onChange={handleMessageChange}
-                            className='border my-1 ' 
-                        />
-                    </label>
-                </div>
-                <br />
-                <button type='submit'
-                    className='bg-rose-300 btn hover:bg-rose-100 font-bold py-2 px-4 rounded-full'>
-                    Submit RSVP
-                </button>
             </form>
         </div>
     )
