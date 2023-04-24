@@ -68,10 +68,9 @@ function RSVPForm() {
                             />
                         </label>
                     </div>
-                    <br />
                     <button type='submit'
                         className='bg-rose-300 btn hover:bg-rose-100 font-medium py-2 px-4 rounded-full'>
-                        Submit RSVP
+                        Submit
                     </button>
                 </div>
             </form>
