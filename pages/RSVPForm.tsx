@@ -43,22 +43,22 @@ function RSVPForm() {
             <div className='space-y-6 bg-stone-50 rounded-xl drop-shadow-xl p-5 grid-cols-1 w-96'>
                 <label className='flex-col'>
                     <div className='w-full'>Are you able to attend?</div>
-                    <select value={attending || ''} onChange={handleAttendingChange} className='w-full my-1 rounded-lg bg-white border border-gray-300'>
+                    <select value={attending || ''} onChange={handleAttendingChange} className='w-full my-1 rounded-lg bg-white border border-gray-300 p-1'>
                         <option value=''></option>
                         <option value='yes'>Yes</option>
                         <option value='no'>No</option>
                     </select>
                 </label>
                 <label className='flex-col'>
-                    <div className='w-full'>Food allergies:</div>
+                    <div className='w-full'>Dietary requirements</div>
                     <input type='text' value={foodAllergies || ''} onChange={handleFoodAllergiesChange}
-                        className='my-1 w-full rounded-lg border border-gray-300'
+                        className='my-1 w-full rounded-lg border border-gray-300 p-2'
                     />
                 </label>
                 <label className='flex-col'>
-                    <div className='w-full'>Leave us message!</div>
+                    <div className='w-full'>Leave us a message!</div>
                     <textarea value={message || ''} rows={5} onChange={handleMessageChange}
-                        className='my-1 w-full rounded-lg border border-gray-300'
+                        className='my-1 w-full rounded-lg border border-gray-300 p-2'
                     />
                 </label>
                 <button type='submit'
