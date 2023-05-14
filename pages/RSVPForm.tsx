@@ -1,4 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react'
+import axios from 'axios'
 
 type InvitationModel = {
     id: string;
@@ -36,25 +37,23 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        fetch('http://localhost/5000/invitations/27a1efe8-aace-404f-888a-4d8995a30e0f', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: invitationData.id,
-                canAttend: canAttend,
-                foodAllergies: foodAllergies,
-                message: message
-            })
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('RSVP submitted successfully:', data)
-            })
-            .catch(error => {
-                console.error('Error submitting RSVP:', error)
-            })
+
+        axios.put('http://localhost:5000/invitations', {
+
+            id: invitationData.id,
+            canAttend: canAttend,
+            foodAllergies: foodAllergies,
+            message: message
+
+        }).then((response: { data: InvitationModel; }) => {
+
+            console.log('RSVP submitted successfully:', response.data);
+
+        }).catch((error: any) => {
+
+            console.error('Error submitting RSVP:', error);
+
+        });
     }
 
     function getAttendingSelectValue(canAttend: boolean): string {
