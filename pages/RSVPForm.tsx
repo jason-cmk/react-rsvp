@@ -12,9 +12,10 @@ type InvitationModel = {
 function RSVPForm(props: { invitationData: InvitationModel }) {
 
     const invitationData = props.invitationData
-    const [canAttend, setAttending] = useState<boolean>(invitationData.canAttend)
-    const [foodAllergies, setFoodAllergies] = useState<string | null>(invitationData.foodAllergies)
-    const [message, setMessage] = useState<string | null>(invitationData.message)
+
+    const [canAttend, setAttending] = useState<boolean>(invitationData?.canAttend)
+    const [foodAllergies, setFoodAllergies] = useState<string | null>(invitationData?.foodAllergies)
+    const [message, setMessage] = useState<string | null>(invitationData?.message)
 
     function handleAttendingChange(event: ChangeEvent<HTMLSelectElement>) {
         let attending: boolean
