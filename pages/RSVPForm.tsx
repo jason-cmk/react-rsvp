@@ -1,5 +1,4 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react'
-import axios from 'axios'
 
 type InvitationModel = {
     id: string;
@@ -36,25 +35,27 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
         setMessage(event.target.value)
     }
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
 
-        axios.put('http://localhost:5000/invitations', {
+        try {
+            const response = await fetch('https://windows-rsvp-backend.azurewebsites.net/invitations/', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: invitationData.id,
+                    canAttend: canAttend,
+                    foodAllergies: foodAllergies,
+                    message: message
+                }),
+            });
 
-            id: invitationData.id,
-            canAttend: canAttend,
-            foodAllergies: foodAllergies,
-            message: message
-
-        }).then((response: { data: InvitationModel; }) => {
-
-            console.log('RSVP submitted successfully:', response.data);
-
-        }).catch((error: any) => {
-
+            console.log('RSVP submitted successfully:', response);
+        } catch (error: any) {
             console.error('Error submitting RSVP:', error);
-
-        });
+        }
     }
 
     function getAttendingSelectValue(canAttend: boolean): string {

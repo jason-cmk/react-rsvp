@@ -1,8 +1,25 @@
 import RSVPForm from './RSVPForm'
 import InvitationMessage from './InvitationMessage'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+
+async function getInvitationData(id: string) {
+    const maxRetries = 5;
+    const delay = 5000;
+    let tries = 0;
+
+    while (tries < maxRetries) {
+        try {
+            var response = await fetch('https://windows-rsvp-backend.azurewebsites.net/invitations/' + id);
+
+            return response
+
+        } catch {
+            tries += 1
+            await new Promise(r => setTimeout(r, delay));
+        }
+    }
+}
 
 export default function Home() {
     type InvitationModel = {
@@ -17,9 +34,33 @@ export default function Home() {
     const router = useRouter()
 
     useEffect(() => {
-        axios.get<InvitationModel>('http://localhost:5000/invitations/' + router.query.id)
-            .then(response => setInvitationData(response.data))
-            .catch(error => console.error('ohhhhh shit i could not load: ' + error))
+        async function fetchInvitationData(): Promise<void> {
+            if (typeof (router.query.id) !== 'string') {
+                console.error('Unabale to read invitation ID from query parameter.');
+                return;
+            }
+
+            try {
+                const response = await getInvitationData(router.query.id);
+
+                if (response === undefined) {
+                    throw new Error('Response undefined!');
+                }
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data: InvitationModel = await response.json();
+
+                setInvitationData(data);
+
+            } catch (error) {
+                console.error('ohhhhh shit i could not load: ' + error);
+            }
+        }
+
+        fetchInvitationData()
     }, [router])
 
     return (
