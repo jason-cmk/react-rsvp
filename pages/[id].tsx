@@ -14,11 +14,14 @@ async function getInvitationData(id: string) {
 
             return response
 
-        } catch {
+        } catch (error: any) {
+            console.error('Error submitting RSVP:', error);
             tries += 1
             await new Promise(r => setTimeout(r, delay));
         }
     }
+
+    console.error('Max retries attempted for fetching invitation.');
 }
 
 export default function Home() {

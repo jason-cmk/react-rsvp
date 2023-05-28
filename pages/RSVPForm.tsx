@@ -8,6 +8,7 @@ type InvitationModel = {
     message: string;
 }
 
+
 function RSVPForm(props: { invitationData: InvitationModel }) {
 
     const invitationData = props.invitationData
@@ -35,29 +36,6 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
         setMessage(event.target.value)
     }
 
-    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
-
-        try {
-            const response = await fetch('https://windows-rsvp-backend.azurewebsites.net/invitations/', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: invitationData.id,
-                    canAttend: canAttend,
-                    foodAllergies: foodAllergies,
-                    message: message
-                }),
-            });
-
-            console.log('RSVP submitted successfully:', response);
-        } catch (error: any) {
-            console.error('Error submitting RSVP:', error);
-        }
-    }
-
     function getAttendingSelectValue(canAttend: boolean): string {
         if (canAttend === true) {
             return 'yes'
@@ -66,6 +44,44 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
         } else {
             return ''
         }
+    }
+
+    async function saveInvitation() {
+        const maxRetries = 5;
+        const delay = 5000;
+        let tries = 0;
+
+        while (tries < maxRetries) {
+            try {
+                const response = await fetch('https://windows-rsvp-backend.azurewebsites.net/invitations/', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        id: invitationData.id,
+                        canAttend: canAttend,
+                        foodAllergies: foodAllergies,
+                        message: message
+                    }),
+                });
+
+                console.log('RSVP submitted successfully:', response);
+                return;
+
+            } catch (error: any) {
+                console.error('Error submitting RSVP:', error);
+                tries += 1
+                await new Promise(r => setTimeout(r, delay));
+            }
+        }
+
+        console.error('Max retries attempted for saving invitation.');
+    }
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+        await saveInvitation();
     }
 
     return (
