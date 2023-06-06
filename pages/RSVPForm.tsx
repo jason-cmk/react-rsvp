@@ -16,6 +16,8 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
     const [canAttend, setAttending] = useState<boolean>(invitationData?.canAttend)
     const [foodAllergies, setFoodAllergies] = useState<string | null>(invitationData?.foodAllergies)
     const [message, setMessage] = useState<string | null>(invitationData?.message)
+    const [inDraft, setInDraft] = useState<boolean>(true)
+    const [sending, setSending] = useState<boolean>(false);
 
     function handleAttendingChange(event: ChangeEvent<HTMLSelectElement>) {
         let attending: boolean
@@ -26,14 +28,17 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
         }
 
         setAttending(attending)
+        setInDraft(true)
     }
 
     function handleFoodAllergiesChange(event: ChangeEvent<HTMLInputElement>) {
         setFoodAllergies(event.target.value)
+        setInDraft(true)
     }
 
     function handleMessageChange(event: ChangeEvent<HTMLTextAreaElement>): void {
         setMessage(event.target.value)
+        setInDraft(true)
     }
 
     function getAttendingSelectValue(canAttend: boolean): string {
@@ -67,6 +72,7 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
                 });
 
                 console.log('RSVP submitted successfully:', response);
+
                 return;
 
             } catch (error: any) {
@@ -81,7 +87,16 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        await saveInvitation();
+
+        setSending(true);
+
+        let minWaitTime = new Promise(r => setTimeout(r, 750));
+        let saveInvitationPromise = saveInvitation();
+
+        await Promise.all([minWaitTime, saveInvitationPromise]);
+
+        setInDraft(false)
+        setSending(false)
     }
 
     return (
@@ -107,10 +122,23 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
                         className='my-1 w-full rounded-lg border border-gray-300 p-2'
                     />
                 </label>
-                <button type='submit'
-                    className='bg-rose-300 btn hover:bg-rose-100 font-medium py-2 px-4 rounded-full'>
-                    Submit
-                </button>
+                <div className="flex">
+                    <div className="font-medium rounded-full double-confirm overflow-hidden">
+                        <div className={!inDraft ? 'transform transition duration-500 ease-in-out -translate-x-full'
+                            : 'transform transition duration-500 ease-in-out'} >
+                            <button type='submit'
+                                disabled={sending}
+                                className={sending ? 'py-2 px-4 bg-rose-300 disabled:bg-rose-100 btn hover:bg-rose-100 animate-pulse' 
+                                : 'py-2 px-4 bg-rose-300 disabled:bg-rose-100 btn hover:bg-rose-100'} >
+                                Submit
+                            </button>
+                            <button disabled
+                                className='absolute py-2 px-4 bg-green-200 btn' >
+                                Thanks!
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
     )
