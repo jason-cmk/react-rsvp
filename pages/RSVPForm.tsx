@@ -129,7 +129,7 @@ function RSVPForm(props: { invitationData: InvitationModel }) {
                             <button type='submit'
                                 disabled={sending}
                                 className={sending ? 'py-2 px-4 bg-rose-300 disabled:bg-rose-100 btn hover:bg-rose-100 animate-pulse' 
-                                : 'py-2 px-4 bg-rose-300 disabled:bg-rose-100 btn hover:bg-rose-100'} >
+                                : 'py-2 px-4 bg-rose-300 disabled:bg-rose-100 btn hover:bg-rose-100 focus:bg-rose-100 focus:rounded-full'} >
                                 Submit
                             </button>
                             <button disabled
