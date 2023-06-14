@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 async function getInvitationData(id: string) {
-    const maxRetries = 5;
-    const delay = 2000;
+    const maxRetries = 25;
+    const delay = 300;
     let tries = 0;
 
     while (tries < maxRetries) {
