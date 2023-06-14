@@ -14,7 +14,10 @@ export default function Home() {
                         ? 'animate-spin flex justify-center items-center'
                         : 'flex justify-center items-center'}>
                     {/* eslint-disable-next-line */}
-                    <img src='/charlie_rough.png' alt='Charlie the cat' className='max-w-sm p-5 overflow-auto' onClick={handleCharlieTapped} />
+                    <img src={spin
+                        ? '/charlie_happy.png'
+                        : '/charlie_rough.png'}
+                        alt='Charlie the cat' className='max-w-sm p-5 overflow-auto' onClick={handleCharlieTapped} />
                 </div>
 
                 <div className='text-red-500 font-bold text-2xl font-sans grid-cols-1 py-5 items-center justify-center text-center

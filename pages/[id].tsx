@@ -34,6 +34,7 @@ export default function Home() {
     }
 
     const [invitationData, setInvitationData] = useState<InvitationModel | null>()
+    const [animateCharlie, setAnimateCharlie] = useState<boolean>(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -66,12 +67,21 @@ export default function Home() {
         fetchInvitationData()
     }, [router])
 
+    function handleCharlieTapped(): void {
+        setAnimateCharlie(!animateCharlie);
+    }
+
     return (
         <main className='flex min-h-screen flex-col items-center bg-gradient-to-b from-rose-400 to-rose-200'>
             <div className='rounded-md columns-1 container bg-stone-100 text-black font-serif m-10 p-5 drop-shadow-md'>
-                <div className='flex justify-center items-center'>
+                <div className={animateCharlie
+                        ? 'animate-bounce flex justify-center items-center'
+                        : 'flex justify-center items-center'}>
                     {/* eslint-disable-next-line */}
-                    <img src='/charlie_rough.png' alt='Charlie the cat' className='max-w-sm p-5' />
+                    <img src={animateCharlie
+                        ? '/charlie_happy.png'
+                        : '/charlie_rough.png'}
+                        alt='Charlie the cat' className='max-w-sm p-5 overflow-auto' onClick={handleCharlieTapped}/>
                 </div>
                 {invitationData &&
                     <InvitationMessage invitee={invitationData.name} />
