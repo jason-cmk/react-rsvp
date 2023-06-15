@@ -2,6 +2,7 @@ import RSVPForm from './RSVPForm'
 import InvitationMessage from './InvitationMessage'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Head from 'next/head';
 
 async function getInvitationData(id: string) {
     const maxRetries = 25;
@@ -73,6 +74,9 @@ export default function Home() {
 
     return (
         <main className='flex min-h-screen flex-col items-center bg-gradient-to-b from-rose-400 to-rose-200'>
+            <Head>
+                <title>Cindy and Jason&apos;s Wedding!!!</title>
+            </Head>
             <div className='rounded-md columns-1 container bg-stone-100 text-black font-serif m-10 p-5 drop-shadow-md'>
                 <div className={animateCharlie
                         ? 'animate-bounce flex justify-center items-center'

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react"
 
 export default function Home() {
@@ -9,6 +10,9 @@ export default function Home() {
 
     return (
         <main className='flex min-h-screen flex-col items-center bg-gradient-to-b from-rose-400 to-rose-200'>
+            <Head>
+                <title>Cindy and Jason&apos;s Wedding!!!</title>
+            </Head>
             <div className='rounded-md columns-1 container bg-stone-100 text-black font-serif m-10 p-5 drop-shadow-md'>
                 <div className={spin
                         ? 'animate-spin flex justify-center items-center'
