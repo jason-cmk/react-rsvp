@@ -10,7 +10,7 @@ export default function InviationMessage(props: { invitee: string }) {
             <div className='text-4xl p-4 text-center'>Thursday 14th of March 2024</div>
             <p className='text-xl'>at</p>
             <div className='text-4xl p-4 text-center'>
-                <a href="https://goo.gl/maps/ftAd66DC2jx5NdHr6">Bridgewater Estate <span className='bg-gray-50 hover:bg-gray-300 transition-all duration-200 rounded-lg border border-gray-300'>🗺️📍</span></a>
+                <a href="https://goo.gl/maps/ftAd66DC2jx5NdHr6" target="_blank">Bridgewater Estate <span className='bg-gray-50 hover:bg-gray-300 transition-all duration-200 rounded-lg border border-gray-300'>🗺️📍</span></a>
             </div>
         </div>
     )
